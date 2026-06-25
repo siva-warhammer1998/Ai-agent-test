@@ -1,0 +1,13 @@
+# Project-local Codex defaults for this test repository.
+# Codex only loads project `.codex/` config after the project is trusted.
+# Workflow rules for the Go/AWS S3 bucket agent live in ../AGENTS.md.
+# In particular, Codex must ask for the bucket name and AWS region before
+# deployment-specific configuration or any AWS-mutating command.
+
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+web_search = "cached"
+
+[features]
+multi_agent = true
+shell_snapshot = true

@@ -11,3 +11,10 @@ type BucketPlan struct {
 	Operation string
 	DryRun    bool
 }
+
+type BucketCreationResult struct {
+	Name    string
+	Region  string
+	Created bool
+	Message string
+}

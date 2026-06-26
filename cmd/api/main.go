@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"io"
+	"os"
 
 	"github.com/siva-warhammer1998/Ai-agent-test/internal/config"
 	"github.com/siva-warhammer1998/Ai-agent-test/internal/domain"
@@ -9,9 +11,13 @@ import (
 )
 
 func main() {
+	run(os.Stdout)
+}
+
+func run(writer io.Writer) {
 	cfg, err := config.Load()
 	if err != nil {
-		fmt.Printf("configuration error: %v\n", err)
+		fmt.Fprintf(writer, "configuration error: %v\n", err)
 		return
 	}
 
@@ -21,14 +27,14 @@ func main() {
 		Region: cfg.AWSRegion,
 	})
 	if err != nil {
-		fmt.Printf("planning error: %v\n", err)
+		fmt.Fprintf(writer, "planning error: %v\n", err)
 		return
 	}
 
-	fmt.Println("AWS S3 bucket agent")
-	fmt.Printf("operation: %s\n", plan.Operation)
-	fmt.Printf("target bucket: %s\n", plan.Name)
-	fmt.Printf("target region: %s\n", plan.Region)
-	fmt.Printf("dry run: %t\n", plan.DryRun)
-	fmt.Println("status: dry run only; no AWS resources were created or modified")
+	fmt.Fprintln(writer, "AWS S3 bucket agent")
+	fmt.Fprintf(writer, "operation: %s\n", plan.Operation)
+	fmt.Fprintf(writer, "target bucket: %s\n", plan.Name)
+	fmt.Fprintf(writer, "target region: %s\n", plan.Region)
+	fmt.Fprintf(writer, "dry run: %t\n", plan.DryRun)
+	fmt.Fprintln(writer, "status: dry run only; no AWS resources were created or modified")
 }
